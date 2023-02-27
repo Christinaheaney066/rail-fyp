@@ -2,17 +2,8 @@ import React from 'react';
 import {useState, useMemo} from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { GoogleMap, useJsApiLoader, useLoadScript, Marker, Autocomplete, DirectionsRenderer, InfoWindow } from '@react-google-maps/api';
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
+import {Combobox,ComboboxInput,ComboboxPopover,ComboboxList,ComboboxOption,} from "@reach/combobox";
+import usePlacesAutocomplete, {getGeocode,getLatLng,} from "use-places-autocomplete";
 
 //https://www.youtube.com/watch?v=9e-5QHpadi0 look at this
 

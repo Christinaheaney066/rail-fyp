@@ -28,6 +28,7 @@
     "react-firebase-hooks": "^5.1.1",
     "react-icons": "^4.7.1",
     "react-native-webview": "^11.26.0",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.0",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.6",

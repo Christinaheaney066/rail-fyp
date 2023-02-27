@@ -1,0 +1,17 @@
+.content-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.content-container img {
+  width: 800px;
+  height: 600px;
+  margin: 10px;
+}
+
+.content-container h1 {
+  margin-bottom: 20px;
+}

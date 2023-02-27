@@ -1,18 +1,18 @@
 import React from 'react';
-import './App.css';
-import logoImg from './Logofyp.png';
+import '../home/App.css';import logoImg from '../extras/Logofyp.png';
+
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react';
 import Container from 'react-bootstrap/Container';
-import Login from './Login';
+import Login from '../loginAndRegister/Login';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import Dashboard from "./Dashboard";
-import Register from "./Register";
-import FilesFolder from "./FilesFolder";
-import NearYou from "./NearYou";
-import Map from './components/Map';
-import Navbar from './components/NavBar';
-import RoutesFinder from "./RoutesFinder";
-import TestRouteFinder from "./TestRouteFinder";
+import Dashboard from "../home/Dashboard";
+import Register from "../loginAndRegister/Register";
+import FilesFolder from "../filesFolder/FilesFolder";
+import NearYou from "../nearYou/NearYou";
+import Map from '../components/Map';
+import Navbar from '../components/NavBar';
+import RoutesFinder from "../route/RoutesFinder";
+import TestRouteFinder from "../route/TestRouteFinder";
 
 
 function App() {
@@ -48,5 +48,4 @@ function App() {
   );
 
 }
-
 export default App;
