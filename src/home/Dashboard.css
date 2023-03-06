@@ -1,9 +1,7 @@
-.LoginCheck__container {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  background-color: #dcdcdc;
-  padding: 30px;
+
+img {
+  max-width: 50%;
+  transform: scale(0.8);
 }
 .LoginCheck__btn {
   padding: 10px;
@@ -32,3 +30,11 @@
   padding: 30px;
   bottom: 0;
 }
+.sliderPics_container{
+overFit: cover;
+height : 50 px;
+width : 50 px;
+padding: 30px;
+
+}
+

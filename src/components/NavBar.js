@@ -105,7 +105,7 @@ function Navbar() {
               </div>
             </li>
           </ul>
-          {button && <Button buttonStyle='btn--outline'>LOGOUT</Button>}
+           <button className="LoginCheck__btn" onClick={logout}> LOGOUT </button>
 
         </div>
       </nav>

@@ -4,7 +4,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { GoogleMap, useJsApiLoader, useLoadScript, Marker, Autocomplete, DirectionsRenderer, InfoWindow } from '@react-google-maps/api';
 import {Combobox,ComboboxInput,ComboboxPopover,ComboboxList,ComboboxOption,} from "@reach/combobox";
 import usePlacesAutocomplete, {getGeocode,getLatLng,} from "use-places-autocomplete";
-
+import './NearYou.css'
 //https://www.youtube.com/watch?v=9e-5QHpadi0 look at this
 
 
@@ -90,61 +90,6 @@ import usePlacesAutocomplete, {getGeocode,getLatLng,} from "use-places-autocompl
               </Combobox>
             );
           };
-
-
-
-
-         /*   const Map = withScriptjs(withGoogleMap((props) =>
-              <GoogleMap
-                defaultZoom={8}
-                defaultCenter={{ lat: -34.397, lng: 150.644 }}
-              >
-                {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />}
-              </GoogleMap>
-            ));
-
-            function MyMapComponent() {
-              return (
-                <Map
-                  isMarkerShown
-                  googleMapURL={"https:maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyBXvVKFmNw0Og1MsaYaPnABB7oW_MjW56Q"}
-                  loadingElement={<div style={{ height: `100%` }} />}
-                  containerElement={<div style={{ height: `400px` }} />}
-                  mapElement={<div style={{ height: `100%` }} />}
-                />
-              );
-            }}
-*/
-/*
-        class NearYou extends React.Component{
-            render(){
-                return(
-                     <LoadScript
-                            googleMapsApiKey="AIzaSyBXvVKFmNw0Og1MsaYaPnABB7oW_MjW56Q"
-                          >
-                            <GoogleMap
-                              mapContainerStyle={containerStyle}
-                              center={center}
-                              zoom={10}
-                            >
-                               <></>
-                                    </GoogleMap>
-                                  </LoadScript>
-
-                    )
-                    }
-                    }
-                    */
-
-const containerStyle = {
-  width: '400px',
-  height: '400px'
-};
-
-const center = {
-  lat: -3.745,
-  lng: -38.523
-};
 
 
 

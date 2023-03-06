@@ -1,11 +1,7 @@
 import firebase from "firebase/app";
 import 'firebase/auth';
 import 'firebase/firestore';
-//import { getAnalytics } from "firebase/analytics";
-//import {getFirestore} from "@firebase/firestore";
 import 'firebase/database';
-
-
 import { initializeApp } from "firebase/app";
 import {
  GoogleAuthProvider,
@@ -100,6 +96,8 @@ const sendPasswordReset = async (email) => {
     alert(err.message);
   }
 };
+
+
 //logout function
 const logout = () => {
   signOut(auth);
@@ -115,5 +113,7 @@ export {
   sendPasswordReset,
   logout,
 };
+
+
 
 //export firebase;
