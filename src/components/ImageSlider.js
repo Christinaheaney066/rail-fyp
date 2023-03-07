@@ -1,9 +1,10 @@
+
 import React from 'react';
 import { useState } from "react";
 
 const slideStyles = {
-  width: "500px",
-  height: "500px",
+  width: "600px",
+  height: "600px",
   borderRadius: "10px",
   backgroundSize: "cover",
   backgroundPosition: "center",
@@ -33,7 +34,7 @@ const leftArrowStyles = {
 
 const sliderStyles = {
   position: "relative",
-  height: "50px",
+  height: "100%",
 };
 
 const dotsContainerStyles = {
@@ -46,6 +47,16 @@ const dotStyle = {
   cursor: "pointer",
   fontSize: "20px",
 };
+const slidesContainerStyles = {
+  display: "flex",
+  height: "100%",
+  transition: "transform ease-out 0.3s",
+};
+
+const slidesContainerOverflowStyles = {
+  overflow: "hidden",
+  height: "100%",
+};
 
 const ImageSlider = ({ slides }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -55,7 +66,7 @@ const ImageSlider = ({ slides }) => {
     setCurrentIndex(newIndex);
   };
   const goToNext = () => {
-    const isLastSlide = currentIndex === 25;
+    const isLastSlide = currentIndex === slides.length - 1 ;
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };

@@ -14,7 +14,7 @@ img {
 .dashboard div {
   margin-top: 7px;
 }
-.HomeContent__container {
+.HomeCheck {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -22,14 +22,7 @@ img {
   padding: 30px;
   top: 0;
 }
-.FooterDash__container {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  background-color: #dcdcdc;
-  padding: 30px;
-  bottom: 0;
-}
+
 .sliderPics_container{
 overFit: cover;
 height : 50 px;
