@@ -1,9 +1,9 @@
-//import React, { useState, useEffect } from 'react';
-//import { getDocs, collection } from 'firebase/firestore';
-//import { db } from '../home/firebase';
+import React, { useState, useEffect } from 'react';
+import { getDocs, collection } from 'firebase/firestore';
+import { db } from '../home/firebase';
 //import FileItem from './FileItem';
-//
-//const FileList = ({ removeFile }) => {
+
+const FileList = ({ files, removeFile }) => {
 //  const [fileList, setFileList] = useState([]);
 //
 //  useEffect(() => {
@@ -19,13 +19,16 @@
 //  return (
 //    <>
 //      <ul className="file-list">
-//        {fileList &&
-//          fileList.map((f) => (
+//        {file &&
+//          file.map((f) => (
 //            <FileItem key={f.name} file={f} deleteFile={removeFile} />
 //          ))}
 //      </ul>
 //    </>
 //  );
-//};
-//
-//export default FileList;
+};
+
+export default FileList;
+
+
+
