@@ -12,7 +12,7 @@ import Map from '../components/Map';
 import Navbar from '../components/NavBar';
 import RoutesFinder from "../route/RoutesFinder";
 import TestRouteFinder from "../route/TestRouteFinder";
-
+import Uploadfile from '../filesFolder/Uploadfile';
 
 
 function App() {
@@ -32,7 +32,7 @@ function App() {
            <Route exact path="/Register" element={<Register />} />
            <Route exact path="/Dashboard" element={<Dashboard />} />
            <Route exact path="/FilesFolder" element={<FilesFolder />} />
-           <Route exact path="/NearYou" element={<NearYou />} />
+           <Route exact path="/NearYou"  element={<NearYou />}/>
            <Route exact path="/TestRouteFinder" element={<TestRouteFinder />} />
          </Routes>
        </Router>

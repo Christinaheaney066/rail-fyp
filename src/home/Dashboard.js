@@ -40,12 +40,10 @@ const slides  = [
 
  const containerStyles = {
      width: "500px",
-     height: "800px",
+     height: "280px",
      margin: "0 auto",
      display: "flex",
-     flexWrap: "wrap",
-     justifyContent: "center",
-    alignItems: "center",
+
  };
 
  const imageStyles = {
@@ -58,9 +56,7 @@ const slides  = [
   return (
   <>
       <div className="HomeCheck">
-    <div className="HomeContent__container">
       <HomeContent />
-     </div>
      </div>
 
            <div className = "sliderPics_container" style={containerStyles}>
