@@ -60,3 +60,35 @@ height: 46px;
 .info {
     font-size: 0.8rem;
 }
+
+form{
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+border: 2px dashed;
+height: 300px;
+width: 150 px;
+cursor: pointer;
+border-radius: 5px;
+padding: 20px;
+
+}
+.uploaded-row{
+margin:10px o;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 15px 20px;
+boarder-radius: 5px;
+
+
+
+}
+.upload-file-container {
+  margin-top: 20px;
+}
+.save-file-btn{
+margin-top: 20px;
+margin-bottom: 50px;
+}

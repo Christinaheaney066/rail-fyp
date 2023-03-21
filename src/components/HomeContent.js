@@ -2,7 +2,6 @@ import React from 'react';
 import '../home/App.css';
 import { Button } from './Button';
 import './HomeContent.css';
-
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {Link, useNavigate } from "react-router-dom";

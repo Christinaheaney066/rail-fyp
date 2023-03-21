@@ -59,9 +59,9 @@ const slides  = [
       <HomeContent />
      </div>
 
-           <div className = "sliderPics_container" style={containerStyles}>
-             <ImageSlider slides={slides} />
-           </div>
+     <div className = "sliderPics_container" style={containerStyles}>
+      <ImageSlider slides={slides} />
+      </div>
 
 
 
