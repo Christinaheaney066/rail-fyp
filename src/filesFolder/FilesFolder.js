@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../home/firebase';
 import Uploadfile from './Uploadfile';
 //import FileList from './FileList';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import { getAuth } from 'firebase/auth';
+import { query, collection, getDocs, where } from 'firebase/firestore';
 
 function DisplayTickets({links}) {
     return (
@@ -80,35 +80,38 @@ function App() {
   );
 }
 
-
-
 function RoutesList() {
   const [routes, setRoutes] = useState([]);
+  const auth = getAuth();
+  const userId = auth.currentUser && auth.currentUser.uid;
 
   useEffect(() => {
     async function fetchRoutes() {
-      const querySnapshot = await getDocs(collection(db, "routesCollection"));
-      const routes = querySnapshot.docs.map(doc => doc.data());
-      setRoutes(routes);
+      if (userId) {
+        const querySnapshot = await getDocs(
+          query(collection(db, 'routesCollection'), where('userId', '==', userId))
+        );
+        const routes = querySnapshot.docs.map(doc => doc.data());
+        setRoutes(routes);
+      }
     }
     fetchRoutes();
-  }, []);
+  }, [userId]);
 
   return (
-  <>
-    <div>
-      {routes.map((route, index) => (
-        <div key={index}>
-          <p>Origin: {route.origin}</p>
-          <p>Destination: {route.destination}</p>
-          <p>Waypoints: {JSON.stringify(route.waypoints)}</p>
-          <p>Distance: {route.distance}</p>
-          <p>Duration: {route.duration}</p>
-        </div>
-      ))}
-    </div>
-
-        </>
+    <>
+      <div>
+        {routes.map((route, index) => (
+          <div key={index}>
+            <p>Origin: {route.origin}</p>
+            <p>Destination: {route.destination}</p>
+            <p>Waypoints: {JSON.stringify(route.waypoints)}</p>
+            <p>Distance: {route.distance}</p>
+            <p>Duration: {route.duration}</p>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 

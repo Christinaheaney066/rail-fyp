@@ -16,3 +16,13 @@
   left: 60%;
   transform: translateY(-50%);
 }
+
+.map-todo-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.map-todo-container > * {
+  flex: 1;
+  margin: 0 1rem;
+}

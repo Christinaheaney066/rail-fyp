@@ -8,13 +8,15 @@ import { useEffect} from "react";
 import firebase from 'firebase/app';
 import 'firebase/database';
 import {db} from "../home/firebase";
+import { getAuth } from 'firebase/auth';
+
 
 
 
 const center = { lat: 48.8584, lng: 2.2945 }
 
     function App() {
-  const { isLoaded } = useJsApiLoader({
+    const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: 'AIzaSyBXvVKFmNw0Og1MsaYaPnABB7oW_MjW56Q',
     libraries: ['maps'],
   })
@@ -124,21 +126,25 @@ const center = { lat: 48.8584, lng: 2.2945 }
   }
 
 
-  async function saveRoute() {
-    const routeData = {
-      origin: originRef.current.value,
-      destination: destiantionRef.current.value,
-      waypoints: waypts,
-      distance: distance,
-      duration: duration,
-    };
-     try {
-         const docRef = await addDoc(collection(db, "routesCollection"), routeData);
-         console.log("Route document written with ID: ", docRef.id);
-       } catch (e) {
-         console.error("Error adding document: ", e);
-       }
-     }
+async function saveRoute() {
+  const auth = getAuth();
+  const userId = auth.currentUser && auth.currentUser.uid;
+  const routeData = {
+    userId,
+    origin: originRef.current.value,
+    destination: destiantionRef.current.value,
+    waypoints: waypts,
+    distance: distance,
+    duration: duration,
+  };
+
+  try {
+    const docRef = await addDoc(collection(db, 'routesCollection'), routeData);
+    console.log('Route document written with ID: ', docRef.id);
+  } catch (e) {
+    console.error('Error adding document: ', e);
+  }
+}
 
 
   return (
