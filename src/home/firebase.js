@@ -87,6 +87,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
     alert(err.message);
   }
 };
+//password reset link
 const sendPasswordReset = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
@@ -112,6 +113,7 @@ export {
   registerWithEmailAndPassword,
   sendPasswordReset,
   logout,
+  sendPasswordResetEmail
 };
 
 

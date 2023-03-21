@@ -13,28 +13,27 @@ import Navbar from '../components/NavBar';
 import RoutesFinder from "../route/RoutesFinder";
 import TestRouteFinder from "../route/TestRouteFinder";
 import Uploadfile from '../filesFolder/Uploadfile';
+import Reset from '../loginAndRegister/Reset';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from './firebase';
+import { AuthContext } from '../components/AuthContext';
+import PrivateRoute from '../components/PrivateRoute';
 
 
 function App() {
-<div>
-   const App = () => (
-     <div className="App">
-     </div>
-   </div>
-
-  return (
+   return (
      <div className="App">
        <img src={logoImg} alt="Logo"/>
        <Router>
-         <Navbar />
-         <Routes>
-           <Route exact path="/" element={<Login />} />
-           <Route exact path="/Register" element={<Register />} />
-           <Route exact path="/Dashboard" element={<Dashboard />} />
-           <Route exact path="/FilesFolder" element={<FilesFolder />} />
-           <Route exact path="/NearYou"  element={<NearYou />}/>
-           <Route exact path="/TestRouteFinder" element={<TestRouteFinder />} />
-         </Routes>
+           <Navbar />
+           <Routes>
+                      <Route exact path="/" element={<Login />} />
+                      <Route exact path="/Register" element={<Register />} />
+                      <Route exact path="/Dashboard" element={<Dashboard />} />
+                      <Route exact path="/FilesFolder" element={<FilesFolder />} />
+                      <Route exact path="/NearYou"  element={<NearYou />}/>
+                      <Route exact path="/TestRouteFinder" element={<TestRouteFinder />} />
+                    </Routes>
        </Router>
      </div>
    );

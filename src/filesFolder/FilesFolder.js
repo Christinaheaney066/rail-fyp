@@ -1,65 +1,81 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getDocs, collection } from 'firebase/firestore';
-import { db } from '../home/firebase'; // assuming that you have already set up Firebase
+import { db } from '../home/firebase';
 import Uploadfile from './Uploadfile';
 //import FileList from './FileList';
+import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
+import { getAuth } from 'firebase/auth';
 
-
-const UploadFile = () => {
-  const [name, setName] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
-  //const submitForm = () => {};
-
-
-  return (
-    <div className="UploadFile">
-      <form>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-
-    <FileUploader
-           onFileSelectSuccess={(file) => setSelectedFile(file)}
-           onFileSelectError={({ error }) => alert(error)}
-         />
-
-         <button onClick={submitForm}>Submit</button>
-       </form>
-     </div>
-   );
- };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function DisplayTickets({links}) {
+    return (
+        <div>
+            {links.map(link => (
+                <a href={link}>{link}</a>
+            ))}
+        </div>
+    );
+}
 
 
 function App() {
   const [showSavedRoutes, setShowSavedRoutes] = useState(false);
+  const [urls, setUrls] = useState([]);
+  const divRef = useRef(null);
 
+  //let urls = [];
 
-function handleSavedRoutesClick() {
-    setShowSavedRoutes(!showSavedRoutes);
+   function handleSavedRoutesClick() {
+      setShowSavedRoutes(!showSavedRoutes);
+   }
+
+  async function onDisplayClick() {
+    const storage = getStorage();
+      const userUid = getAuth().currentUser.uid;
+      const listRef = ref(storage, "");
+
+      try {
+        const res = await listAll(listRef);
+
+        const urls = [];
+
+        for (const itemRef of res.items) {
+          if (itemRef._location.path_.startsWith(userUid)) {
+            const url = await getDownloadURL(itemRef);
+            urls.push(url);
+          }
+        }
+
+        setUrls(urls);
+      } catch (error) {
+        console.log(error);
+      }
   }
 
+  useEffect(() => {
+    console.log(urls)
+  }, [urls])
+
   return (
+  <>
+  <div className= "upload-file-container">
+  <Uploadfile />
+  </div>
+
     <div className= "savedRoutesButn">
       <button onClick={handleSavedRoutesClick}>
        {showSavedRoutes ? 'Hide Saved Routes' : 'Show Saved Routes'}
       </button>{showSavedRoutes && <RoutesList />}</div>
 
+<button onClick={onDisplayClick}>TEST
+</button>
+
+{urls.length !== 0 &&
+    <DisplayTickets links={urls} />
+}
+
+
+
+</>
 
   );
 }
@@ -92,13 +108,9 @@ function RoutesList() {
       ))}
     </div>
 
-
         </>
   );
 }
-
-
-
 
 
 export default App;

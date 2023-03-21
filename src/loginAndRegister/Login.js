@@ -11,12 +11,12 @@ function Login(){
     const [user, loading, error] = useAuthState(auth);
 	  const navigate = useNavigate();
       useEffect(() => {
-        if (loading) {
-          // loading screen
-          return;
-        }
-        if (user) navigate("/Dashboard");
-      }, [user, loading]);
+    if (loading) {
+      // maybe trigger a loading screen
+      return;
+    }
+    if (user) navigate("/dashboard");
+  }, [user, loading]);
 
 	return(
 	<div className="login">
@@ -48,6 +48,9 @@ function Login(){
             <div>
            <Link to="/Register">Register</Link> now.
             </div>
+                    <div>
+                      <Link to="/reset">Forgot Password</Link>
+                    </div>
           </div>
         </div>
       );
