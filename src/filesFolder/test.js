@@ -1,286 +1,281 @@
-//import { useState, useEffect } from 'react';
-//import { getDocs, collection } from 'firebase/firestore';
-//import { db } from '../home/firebase'; // assuming that you have already set up Firebase
-//import Uploadfile from './Uploadfile';
-//
-//
-//
-//function App() {
-//  const [showSavedRoutes, setShowSavedRoutes] = useState(false);
-//  const [files, setFiles] = useState([])
-//
-//  const removeFile = (filename) => {
-//  setFiles(files.filter(file => file.name !== filename))
-//  }
-//
-//
-//  function handleSavedRoutesClick() {
-//    setShowSavedRoutes(!showSavedRoutes);
-//  }
-//
-//  return (
-//  <>
-//<div className= "savedRoutesButn">
-//      <button onClick={handleSavedRoutesClick}>
-//        {showSavedRoutes ? 'Hide Saved Routes' : 'Show Saved Routes'}
-//      </button>{showSavedRoutes && <RoutesList />}</div>
-//
-//
-//            <div classname= "uploadfile">
-//            <p className= "title"> Upload File </p>
-//            <Uploadfile files = {files} setFiles= {setFiles} removeFiles={removeFile} />
-//            <FileList files = {files} removeFile={removeFile} />
-//            </div>
-//</>
-//    );
-//}
-//
-//
-//
-//function RoutesList() {
-//  const [routes, setRoutes] = useState([]);
-//
-//  useEffect(() => {
-//    async function fetchRoutes() {
-//      const querySnapshot = await getDocs(collection(db, "routesCollection"));
-//      const routes = querySnapshot.docs.map(doc => doc.data());
-//      setRoutes(routes);
-//    }
-//    fetchRoutes();
-//  }, []);
-//
-//  return (
-//    <div>
-//      {routes.map((route, index) => (
-//        <div key={index}>
-//          <p>Origin: {route.origin}</p>
-//          <p>Destination: {route.destination}</p>
-//          <p>Waypoints: {JSON.stringify(route.waypoints)}</p>
-//          <p>Distance: {route.distance}</p>
-//          <p>Duration: {route.duration}</p>
-//        </div>
-//      ))}
-//    </div>
-//  );
-//}
-//
-//const { getStorage, ref, uploadBytes, deleteObject } = require("firebase/storage");
-//const storage = getStorage();
-//
-//app.post("/upload", async (req, res) => {
-//  const file = req.files.newFile;
-//  const storageRef = ref(storage, file.name);
-//  try {
-//    await uploadBytes(storageRef, file);
-//    console.log("File uploaded");
-//    return res.status(200).json({ result: true, msg: "file uploaded" });
-//  } catch (error) {
-//    console.error(error);
-//    return res.status(500).json({ result: false, msg: error.message });
-//  }
-//});
-//
-//app.delete("/upload", async (req, res) => {
-//  const filename = req.query.name;
-//  const storageRef = ref(storage, filename);
-//  try {
-//    await deleteObject(storageRef);
-//    console.log("File deleted");
-//    return res.status(200).json({ result: true, msg: "file deleted" });
-//  } catch (error) {
-//    console.error(error);
-//    return res.status(500).json({ result: false, msg: error.message });
-//  }
-//});
-//
-//
-//export default App;
-//
-
-//
-//import React, { useState, useEffect } from 'react';
-//import { getDocs, collection } from 'firebase/firestore';
-//import {db} from "../home/firebase";
-//import FileItem from './FileItem';
-//
-//
-//const FileList = ({ files, removeFile }) => {
-//  const [fileList, setFileList] = useState([]);
-//
-//  useEffect(() => {
-//    const fetchFiles = async () => {
-//      const querySnapshot = await getDocs(collection(db, 'FileCollection'));
-//      const fileList = querySnapshot.docs.map((doc) => doc.data());
-//      setFileList(fileList);
-//    };
-//
-//    fetchFiles();
-//  }, []);
-//
-//
-
-
-import React, { useState } from 'react';
+import { useRef, useState, useEffect } from 'react'
 import {GoogleMap,useLoadScript,Marker,InfoWindow,} from '@react-google-maps/api';
 import usePlacesAutocomplete, {getGeocode,getLatLng,} from 'use-places-autocomplete';
 import {Combobox,ComboboxInput,ComboboxPopover,ComboboxList,ComboboxOption,} from '@reach/combobox';
 import '@reach/combobox/styles.css';
 import './NearYou.css';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/database';
+import {db, auth} from "../home/firebase";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { query, collection, setDoc, getDocs, addDoc, where, doc, getDoc, getFirestore, } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+
 
 const libraries = ['places'];
 const mapContainerStyle = {
-  width: '100vw',
-  height: '100vh',
+width: '50vw',
+height: '50vh',
 };
 const options = {
-  disableDefaultUI: true,
-  zoomControl: true,
+disableDefaultUI: true,
+zoomControl: true,
 };
 const center = { lat: 48.864716, lng: 2.349014 };
-const API_KEY = 'YOUR_API_KEY';
+const googleMapsApiKey = 'AIzaSyBXvVKFmNw0Og1MsaYaPnABB7oW_MjW56Q';
 
-function PlacesAutocomplete({ setSelected }) {
-  const { ready, value, setValue, suggestions: { status, data }, clearSuggestions } = usePlacesAutocomplete();
+function Map({ apiKey }) {
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: 'AIzaSyBXvVKFmNw0Og1MsaYaPnABB7oW_MjW56Q',
+    libraries,
+  });
 
-  const handleSelect = async (address) => {
-    setValue(address, false);
-    clearSuggestions();
+  const API_BASE_URL = "https://maps.googleapis.com/maps/api/js?key=YOUR_AIzaSyBXvVKFmNw0Og1MsaYaPnABB7oW_MjW56Q&libraries=places";
+const [selected, setSelected] = useState(null);
+const [showNearbyPlaces, setShowNearbyPlaces] = useState(false);
+const [places, setPlaces] = useState([]);
+const mapRef = useRef();
+const { ready, value, suggestions: { status, data }, setValue, clearSuggestions } = usePlacesAutocomplete();
 
+const handleSelect = async (address) => {
+setValue(address, false);
+clearSuggestions();
+
+try {
+  const results = await getGeocode({ address });
+  const { lat, lng } = await getLatLng(results[0]);
+  setSelected({ lat, lng });
+} catch (error) {
+  console.log('Error: ', error);
+}
+  };
+
+const handleSearch = () => {
+  if (!selected) {
+    alert("Please select a location first.");
+    return;
+  }
+
+  const service = new window.google.maps.places.PlacesService(mapRef.current);
+
+  const request = {
+    location: selected,
+    radius: "5000",
+    type: ["restaurant", "bar", "night_club", "supermarket", "tourist_attraction", "hospital", "cafe", "atm"],
+  };
+
+  service.nearbySearch(request, (results, status) => {
+    if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+      setPlaces(results);
+      setShowNearbyPlaces(true);
+    } else {
+      alert("Failed to fetch nearby places. Please try again.");
+    }
+  });
+};
+
+  if (loadError) return "Error loading maps";
+  if (!isLoaded) return "Loading maps";
+
+return (
+<>
+<div className="places-container">
+<PlacesAutocomplete setSelected={setSelected} />
+<button onClick={() => setShowNearbyPlaces(!showNearbyPlaces)}>
+Search
+</button>
+</div>
+
+  <GoogleMap
+  zoom={10}
+  center={center}
+  mapContainerStyle={mapContainerStyle}
+  options={options}
+  onLoad={(map) => mapRef.current = map}
+  >
+    {loadError ? (
+      "Error loading maps"
+    ) : !isLoaded ? (
+      "Loading Maps"
+    ) : (
+      <>
+        {selected && <Marker position={selected} />}
+        {showNearbyPlaces && (
+          <>
+            {places.map((place) => (
+              <Marker
+                key={place.place_id}
+                position={{
+                  lat: place.geometry.location.lat,
+                  lng: place.geometry.location.lng,
+                }}
+                onClick={() => {
+                  setSelected(place);
+                }}
+              />
+            ))}
+            {selected && (
+              <InfoWindow
+                position={{
+                  lat: selected.geometry.location.lat,
+                  lng: selected.geometry.location.lng,
+                }}
+                onCloseClick={() => {
+                  setSelected(null);
+                }}
+              >
+                <div>
+                  <h2>{selected.name}</h2>
+                  <p>{selected.vicinity}</p>
+                </div>
+              </InfoWindow>
+            )}
+          </>
+        )}
+      </>
+    )}
+  </GoogleMap>
+
+</>
+
+);
+ }
+
+const PlacesAutocomplete = ({ setSelected }) => {
+const {
+ready,
+value,
+setValue,
+suggestions: { status, data },
+clearSuggestions,
+} = usePlacesAutocomplete();
+
+const handleSelect = async (address) => {
+setValue(address, false);
+clearSuggestions();
+
+const results = await getGeocode({ address });
+const { lat, lng } = await getLatLng(results[0]);
+setSelected({ lat, lng });
+};
+
+return (
+<Combobox onSelect={handleSelect}>
+<ComboboxInput
+value={value}
+onChange={(e) => {
+setValue(e.target.value);
+setSelected(null);
+}}
+disabled={!ready}
+className="combobox-input"
+placeholder="Search an address"
+/>
+<ComboboxPopover>
+<ComboboxList>
+{status === "OK" &&
+data.map(({ id, description }) => (
+<ComboboxOption key={id} value={description} />
+))}
+</ComboboxList>
+</ComboboxPopover>
+</Combobox>
+);
+};
+
+
+function TodoList() {
+  const [todos, setTodos] = useState([]);
+  const [newTodo, setNewTodo] = useState("");
+  const [showTodos, setShowTodos] = useState(false);
+  const [user] = useAuthState(getAuth());
+
+  useEffect(() => {
+    const loadTodos = async () => {
+      if (user) {
+        const docRef = doc(getFirestore(), "placesMemos", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setTodos(docSnap.data().todos);
+        }
+      }
+    };
+    loadTodos();
+  }, [user]);
+
+  const handleInputChange = (event) => {
+    setNewTodo(event.target.value);
+  };
+
+  const handleAddTodo = () => {
+    setTodos([...todos, newTodo]);
+    setNewTodo("");
+  };
+
+  const handleSaveTodos = async () => {
     try {
-      const results = await getGeocode({ address });
-      const { lat, lng } = await getLatLng(results[0]);
-      setSelected({ lat, lng });
-    } catch (error) {
-      console.log('Error: ', error);
+      await setDoc(doc(getFirestore(), "placesMemos", user.uid), { todos });
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred while saving your todos");
     }
   };
 
+  const handleDeleteTodo = (index) => {
+    const updatedTodos = todos.filter((todo, i) => i !== index);
+    setTodos(updatedTodos);
+    console.log(todos);
+  };
+
   return (
-    <Combobox onSelect={handleSelect}>
-      <ComboboxInput
-        value={value}
-        onChange={(e) => {
-          setValue(e.target.value);
-          setSelected(null);
-        }}
-        disabled={!ready}
-        className="combobox-input"
-        placeholder="Search an address"
-      />
-      <ComboboxPopover>
-        <ComboboxList>
-          {status === "OK" &&
-            data.map(({ id, description }) => (
-              <ComboboxOption key={id} value={description} />
-            ))}
-        </ComboboxList>
-      </ComboboxPopover>
-    </Combobox>
+    <div className= "Todo_container">
+      <input type="text" value={newTodo} onChange={handleInputChange} />
+      <button onClick={handleAddTodo}>Add Todo</button>
+      <button onClick={handleSaveTodos}>Save Todos</button>
+      <button onClick={() => setShowTodos(!showTodos)}>
+        {showTodos ? "Hide Todos" : "Show Todos"}
+      </button>
+      {showTodos && (
+        <ul>
+          {todos.map((todo, index) => (
+            <li key={index}>
+              {todo}
+              <button onClick={() => handleDeleteTodo(index)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
 
-function Map() {
-  const [selected, setSelected] = useState(null);
-  const [showNearbyPlaces, setShowNearbyPlaces] = useState(false);
-  const [places, setPlaces] = useState([]);
-
-  const handleSearch = async () => {
-    if (!selected) return;
-    const { lat, lng } = selected;
-    const response = await fetch(
-      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=500&type=restaurant|bar|museum&key=${API_KEY}`
-    );
-    const data = await response.json();
-    setPlaces(data.results);
-  };
-
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: API_KEY,
+function ParentComponent() {
+ const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: 'AIzaSyBXvVKFmNw0Og1MsaYaPnABB7oW_MjW56Q',
     libraries,
-    onLoad: () => setIsMapLoaded(true)
   });
-  const [isMapLoaded, setIsMapLoaded] = useState(false);
+
+  if (loadError) return "Error loading maps";
+  if (!isLoaded) return "Loading maps";
 
   return (
-    <>
+    <div className="map-todo-container">
       <div className="places-container">
         <PlacesAutocomplete setSelected={setSelected} />
-        <button onClick={() => setShowNearbyPlaces(!showNearbyPlaces)}>
-          Search
-        </button>
+        <button onClick={handleSearch}>Search</button>
       </div>
-      {isLoaded ? (
-        <GoogleMap
-          zoom={10}
-          center
-={<LatLngLiteral>center</LatLngLiteral>}
-options={options}
-mapContainerStyle={mapContainerStyle}
->
-{selected && (
-<Marker
-position={{ lat: selected.lat, lng: selected.lng }}
-onClick={() => setSelected(selected)}
-/>
-)}
-{showNearbyPlaces && places.map((place) => (
-<Marker
-key={place.id}
-position={{ lat: place.geometry.location.lat, lng: place.geometry.location.lng }}
-onClick={() => setSelected(place)}
-/>
-))}
-{selected && (
-<InfoWindow
-position={{ lat: selected.lat, lng: selected.lng }}
-onCloseClick={() => setSelected(null)}
->
-<div>
-<h2>{selected.name}</h2>
-<p>{selected.formatted_address}</p>
-</div>
-</InfoWindow>
-)}
-</GoogleMap>
-) : (
-<div>Loading...</div>
-)}
-</>
-);
-}
 
-export default function NearYou() {
-return <Map />;
-}
+      <GoogleMap
+        zoom={10}
+        center={center}
+        mapContainerStyle={mapContainerStyle}
+        options={options}
+        onLoad={(map) => mapRef.current = map}
+      >
+            </GoogleMap>
+            <TodoList />
+          </div>
+        );
+      }
 
-
-
-//            <div classname= "uploadfile">
-//            <p className= "title"> Upload File </p>
-//            <Uploadfile files = {files} setFiles= {setFiles} removeFiles={removeFile} />
-//            <FileList files = {files} removeFile={removeFile} />
-//            </div>
-
-
-
-
-
-//
-//    return(
-//    <>
-//        <ul className = "file-list">
-//        {
-//            files &&
-//            files.map(f => <fileItem
-//                key={f.name}
-//                file = {f}
-//                deleteFile={deleteFileHandler}
-//
-//            >)
-//        }
-//        </ul>
-//</>
-//    )
-//
-//}
-//export default FileList
+export default ParentComponent;
