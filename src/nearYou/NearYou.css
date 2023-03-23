@@ -9,14 +9,58 @@
   margin-top: 50px;
   float: left;
 }
+.search-input {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+  font-size: 16px;
+}
 
+.search-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
 .places-container {
   position: absolute;
   top: 30%;
   left: 60%;
   transform: translateY(-50%);
 }
+.places-search {
+  display: flex;
+  align-items: center;
+  width: 400px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  font-size: 1.2rem;
+  font-family: 'Montserrat', sans-serif;
+  margin-right: 16px;
+}
 
+.places-button {
+  display: inline-block;
+  background-color: #4caf50;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  font-size: 1.2rem;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+}
+
+.places-button:hover {
+  background-color: #3e8e41;
+}
 .map-todo-container {
   display: flex;
   justify-content: space-between;
@@ -25,4 +69,75 @@
 .map-todo-container > * {
   flex: 1;
   margin: 0 1rem;
+}
+
+.Todo_container {
+  width: 40%;
+  background-color: #f8f7f3;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+.Todo_container input[type="text"] {
+  border: none;
+  padding: 0.5rem;
+  margin-right: 1rem;
+  font-size: 1.2rem;
+  border-bottom: 2px solid #aaa;
+  width: 40%;
+}
+
+.Todo_container input[type="text"]:focus {
+  outline: none;
+  border-bottom: 2px solid #008080;
+}
+
+.Todo_container button {
+  background-color: #008080;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.Todo_container button:hover {
+  background-color: #006666;
+}
+
+.Todo_container ul {
+  list-style: none;
+  margin-top: 1rem;
+  padding: 0;
+}
+
+.Todo_container li {
+  background-color: #fff;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Todo_container li button {
+  background-color: #ff6961;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.Todo_container li button:hover {
+  background-color: #cc4c4c;
 }

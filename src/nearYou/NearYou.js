@@ -132,7 +132,6 @@ const handleSelect = async (address) => {
           clearSuggestions={clearSuggestions}
           handleSelect={handleSelect}
         />
-        <button onClick={handleSearch}>Search</button>
       </div>
       <GoogleMap
         zoom={10}
@@ -193,27 +192,29 @@ function PlacesAutocomplete({
   setValue,
   clearSuggestions,
   handleSelect,
+  handleSearch,
 }) {
   return (
-    <Combobox onSelect={handleSelect}>
-      <ComboboxInput
-        value={value}
-        onChange={(e) => {
-          setValue(e.target.value);
-        }}
-        disabled={!ready}
-        className="combobox-input"
-        placeholder="Search an address"
-      />
-      <ComboboxPopover>
-        <ComboboxList>
-          {suggestions.map(({ id, description }) => (
-            <ComboboxOption key={id} value={description} />
-          ))}
-        </ComboboxList>
-      </ComboboxPopover>
-    </Combobox>
-  );
+  <Combobox onSelect={handleSelect}>
+    <ComboboxInput
+      value={value}
+      onChange={(e) => {
+        setValue(e.target.value);
+      }}
+      disabled={!ready}
+      className="search-input"
+      placeholder="Search an address"
+    />
+    <button className="search-button" onClick={handleSearch}>Search</button>
+    <ComboboxPopover>
+      <ComboboxList>
+        {suggestions.map(({ id, description }) => (
+          <ComboboxOption key={id} value={description} />
+        ))}
+      </ComboboxList>
+    </ComboboxPopover>
+  </Combobox>
+);
 }
 
 function TodoList() {

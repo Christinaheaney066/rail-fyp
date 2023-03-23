@@ -66,8 +66,7 @@ function App() {
        {showSavedRoutes ? 'Hide Saved Routes' : 'Show Saved Routes'}
       </button>{showSavedRoutes && <RoutesList />}</div>
 
-<button onClick={onDisplayClick}>TEST
-</button>
+<button onClick={onDisplayClick}>Show Saved Files</button>
 
 {urls.length !== 0 &&
     <DisplayTickets links={urls} />

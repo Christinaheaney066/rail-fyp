@@ -1,5 +1,6 @@
 import React from 'react';
-import '../home/App.css';import logoImg from '../extras/Logofyp.png';
+import '../home/App.css';
+import logoImg from '../extras/Logofyp.png';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react';
 import Container from 'react-bootstrap/Container';
 import Login from '../loginAndRegister/Login';
@@ -20,6 +21,7 @@ import { AuthContext } from '../components/AuthContext';
 import PrivateRoute from '../components/PrivateRoute';
 
 
+
 function App() {
    return (
      <div className="App">
@@ -29,6 +31,7 @@ function App() {
            <Routes>
                       <Route exact path="/" element={<Login />} />
                       <Route exact path="/Register" element={<Register />} />
+                      <Route exact path="/Reset" element={<Reset />} />
                       <Route exact path="/Dashboard" element={<Dashboard />} />
                       <Route exact path="/FilesFolder" element={<FilesFolder />} />
                       <Route exact path="/NearYou"  element={<NearYou />}/>
