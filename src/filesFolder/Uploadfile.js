@@ -22,7 +22,6 @@ const saveFile = async () => {
     const storageRef = ref(storage, userUid + file.name);
 
     uploadBytes(storageRef, file).then((snapshot) => {
-        console.log("!")
     })
 }
 
@@ -31,6 +30,7 @@ const saveFile = async () => {
 
   return (
     <main>
+
       <form>
         <label htmlFor="file-upload" className="file-upload-label">
         </label>
@@ -58,8 +58,8 @@ const saveFile = async () => {
         </span>
       </section>
     <div className="save-file-btn">
-            <button onClick={saveFile}>Save Your File</button>
-          </div>
+     <button className="save-file-btn" onClick={saveFile}>Save Your File</button>
+     </div>
 
     </main>
   );

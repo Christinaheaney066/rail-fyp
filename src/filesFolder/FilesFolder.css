@@ -1,12 +1,37 @@
-.savedRoutesButn{
-  background-color: #ff6961;
+.savedRoutesButn button{
+  background-color: #008080;
   color: #fff;
   border: none;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+  padding: 0.5rem 2rem;
+  font-size: 1.2rem;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 40%;
+  height: 60px;
+
+}
+.savedRoutesButn{
+padding-bottom: 80px;
+
+}
+
+.show-saved-file-btn button {
+  background-color: #008080;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 40%;
+  height: 60px;
+}
+.show-saved-file-btn{
+padding-bottom: 200px;
+
+
 }
 
 .title{
@@ -23,14 +48,30 @@ font-size: 1.2rem;
 
 .button-container {
   margin-bottom: 10px;
+    background-color: #3CB371;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 2rem;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
-.upload-file-container{
-  background-color: #ff6961;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.notebook-list {
+  list-style-type: decimal;
+  font-family: monospace;
+  padding-left: 30px;
+}
+
+.notebook-list li {
+  padding: 5px 0;
+}
+
+.notebook-list li a {
+  text-decoration: none;
+  color: #000;
+}
+
+.notebook-list li a:hover {
+  text-decoration: underline;
 }

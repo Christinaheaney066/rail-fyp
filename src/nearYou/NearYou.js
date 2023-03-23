@@ -37,8 +37,8 @@ import { getAuth } from "firebase/auth";
 
 const libraries = ["places"];
 const mapContainerStyle = {
-  width: "50vw",
-  height: "50vh",
+  width: "100%",
+  height: "45vh",
 };
 const options = {
   disableDefaultUI: true,
@@ -123,6 +123,7 @@ const handleSelect = async (address) => {
 
   return (
     <>
+
       <div className="places-container">
         <PlacesAutocomplete
           ready={ready}
@@ -131,8 +132,11 @@ const handleSelect = async (address) => {
           setValue={setValue}
           clearSuggestions={clearSuggestions}
           handleSelect={handleSelect}
+          handleSearch={() => handleSearch(selected, setPlaces, setShowNearbyPlaces)}
+
         />
       </div>
+      <div className= "Google-map-location">
       <GoogleMap
         zoom={10}
         center={center}
@@ -179,6 +183,7 @@ const handleSelect = async (address) => {
           </InfoWindow>
         )}
       </GoogleMap>
+      </div>
 
       <TodoList />
     </>
@@ -263,10 +268,10 @@ function TodoList() {
   return (
     <div className="Todo_container">
       <input type="text" value={newTodo} onChange={handleInputChange} />
-      <button onClick={handleAddTodo}>Add Todo</button>
-      <button onClick={handleSaveTodos}>Save Todos</button>
+      <button onClick={handleAddTodo}>Add To do</button>
+      <button onClick={handleSaveTodos}>Save To dos</button>
       <button onClick={() => setShowTodos(!showTodos)}>
-        {showTodos ? "Hide Todos" : "Show Todos"}
+        {showTodos ? "Hide To do" : "Show To do"}
       </button>
       {showTodos && (
         <ul>

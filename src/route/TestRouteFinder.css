@@ -1,11 +1,12 @@
-.SaveRoute_btn{
-  padding: 10px;
-  font-size: 18px;
-  margin-top: 10px;
+.SaveRoute_btn button{
+  background-color: #3CB371;
+  color: #fff;
   border: none;
-  color: white;
-  background-color: black;
-  right: 100%;
+  padding: 0.5rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .home-container {

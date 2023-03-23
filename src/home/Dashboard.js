@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import {Link, useNavigate } from "react-router-dom";
-//import "../home/Dashboard.css";
+import { Link, useNavigate } from "react-router-dom";
 import { auth, db, logout } from "../home/firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import HomeContent from '../components/HomeContent';
@@ -9,8 +8,6 @@ import ImageSlider from "../components/ImageSlider";
 import styles from './Dashboard.modules.css';
 import DashboardContent from './DashboardContent';
 import TopTips from "./TopTips";
-
-
 
 //homepage
 
@@ -57,27 +54,33 @@ const slides  = [
    margin: "5px",
  };
 
-
   return (
-  <>
+    <>
       <div className="HomeCheck">
-      <HomeContent />
-     </div>
-
-     <div className = "sliderPics_container" >
-      <ImageSlider slides={slides} />
+        <HomeContent />
       </div>
 
-      <div className= "Dash-content">
-      <DashboardContent/>
-      </div>
+       <div className="col">
+          <div className="row">
+            <div className="slider-content">
+             <div className="slider-container">
+             <ImageSlider slides={slides} />
+           </div>
+         </div>
+        </div>
 
-      <div className= "toptips">
-      <TopTips />
-      </div>
-
-      </>
-       );
-        }
-
-export default Dashboard;
+         <div className="row">
+           <div className="card-container">
+             <div className="card">
+               <DashboardContent />
+             </div>
+             <div className="card">
+               <TopTips />
+             </div>
+           </div>
+         </div>
+       </div>
+     </>
+  );
+}
+export default Dashboard
