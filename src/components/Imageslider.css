@@ -1,54 +1,7 @@
 .img{
 overFit: cover;
-height : 50 px;
+height : 0 px;
 width : 50 px;
 padding: 30px;
 
 }
-.leftArrow,
-.rightArrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 2rem;
-  cursor: pointer;
-  z-index: 1;
-}
-
-.leftArrow {
-  left: 10%;
-}
-
-.rightArrow {
-  right: 10%;
-}
-
-.dotsContainer {
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-}
-
-.dot {
-  margin: 0 10px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #ccc;
-  z-index: 1;
-}
-
-.dot.active {
-  color: #fff;
-}
-.slideStyles  {
-  width: 600px;
-  height: 600px;
-  borderRadius: 10px;
-  backgroundSize: cover;
-  backgroundPosition: center;
-};

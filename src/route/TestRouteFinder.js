@@ -1,5 +1,5 @@
 // eslint-disable//
-import {Box,Button,ButtonGroup,Flex,HStack,IconButton,Input,SkeletonText,Text,} from '@chakra-ui/react'
+import {Box,Button,ButtonGroup,Flex,HStack,IconButton,Input,SkeletonText,Text,Stack, VStack} from '@chakra-ui/react'
 import { FaLocationArrow, FaTimes } from 'react-icons/fa'
 import {useJsApiLoader,GoogleMap,Marker,Autocomplete,DirectionsRenderer,} from '@react-google-maps/api'
 import { useRef, useState } from 'react'
@@ -46,6 +46,15 @@ const center = { lat: 48.8584, lng: 2.2945 }
    /** @type React.MutableRefObject<HTMLInputElement> */
   const waypointRef = useRef(null);
 
+  const [stops, setStops] = useState([]);
+  useEffect(() => {
+    let newStops = [];
+    if (directionsResponse) {
+      newStops = directionsResponse.routes[0].legs.map(leg => leg.start_address);
+      newStops.push(directionsResponse.routes[0].legs.slice(-1)[0].end_address);
+      setStops(newStops);
+    }
+  }, [directionsResponse]);
 
 
   async function calculateRoute() {
@@ -151,16 +160,14 @@ async function saveRoute() {
 
   return (
   <>
-
-
-
     <Flex
       position='relative'
       flexDirection='column'
       alignItems='center'
       h='50vh'
-      w='50vw'
+      w='100%'
     >
+
       <Box position='absolute' left={0} top={0} h='100%' w='100%'>
         {isLoaded &&
             <GoogleMap
@@ -231,23 +238,51 @@ async function saveRoute() {
         </Box>
       </Flex>
 
-        <textarea
-                 border= '1px solid black'
-                 font-size= '100px'
-                 margin-right= '20px'
-                 margin-left= '40px'
-                 margin-top= '50px'
-                 position= 'absolute'
-                 top= '30%'
-                 left= '60%'
-                 value={outStr} rows={10} cols={50} />
+  <div>
+      <Box>
+        <Button
+          backgroundColor="#008080"
+          color="#fff"
+          paddingX="2rem"
+          paddingY="0.5rem"
+          fontSize="1.2rem"
+          borderRadius="5px"
+          cursor="pointer"
+          _hover={{ backgroundColor: "#2E8B57" }}
+          onClick={saveRoute}
+          width= "20%"
+        >
+          Save Route
+        </Button>
+      </Box>
+    </div>
 
-      <div>
-       <Box>
-       <Button classname="SaveRoute_btn" onClick={saveRoute}>Save Route</Button>
-         </Box>
-         </div>
-
+  <VStack
+      as="textarea"
+      readOnly
+      position="absolute"
+      top="30%"
+      left="32.5%"
+      p={4}
+      w="auto"
+      minHeight="200px"
+      minWidth="300px"
+      zIndex="1"
+      value={outStr}
+      rows={10}
+      cols={50}
+      style={{
+      fontSize: '40px',
+      marginRight: '40px',
+      marginLeft: '40px',
+      marginTop: '20%',
+      resize: 'none',
+      }}
+    >
+      {stops.map((stop, index) => (
+        <Text key={index}>{stop}</Text>
+      ))}
+    </VStack>
 
 
         </>

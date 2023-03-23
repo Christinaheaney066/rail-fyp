@@ -1,19 +1,26 @@
 import { useState, useEffect, useRef } from 'react';
 import { db } from '../home/firebase';
 import Uploadfile from './Uploadfile';
-//import FileList from './FileList';
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import { getAuth } from 'firebase/auth';
 import { query, collection, getDocs, where } from 'firebase/firestore';
+import './FilesFolder.css'
+import './Uploadfile.css'
 
-function DisplayTickets({links}) {
-    return (
-        <div>
-            {links.map(link => (
-                <a href={link}>{link}</a>
-            ))}
-        </div>
-    );
+function DisplayTickets({ links }) {
+  return (
+    <div>
+      <ol className="notebook-list">
+        {links.map((file, index) => (
+          <li key={index}>
+            <a href={file.url} target="_blank" rel="noopener noreferrer">
+              {file.name}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
 }
 
 
@@ -28,28 +35,29 @@ function App() {
       setShowSavedRoutes(!showSavedRoutes);
    }
 
-  async function onDisplayClick() {
-    const storage = getStorage();
-      const userUid = getAuth().currentUser.uid;
-      const listRef = ref(storage, "");
+async function onDisplayClick() {
+  const storage = getStorage();
+  const userUid = getAuth().currentUser.uid;
+  const listRef = ref(storage, "");
 
-      try {
-        const res = await listAll(listRef);
+  try {
+    const res = await listAll(listRef);
 
-        const urls = [];
+    const files = [];
 
-        for (const itemRef of res.items) {
-          if (itemRef._location.path_.startsWith(userUid)) {
-            const url = await getDownloadURL(itemRef);
-            urls.push(url);
-          }
-        }
-
-        setUrls(urls);
-      } catch (error) {
-        console.log(error);
+    for (const itemRef of res.items) {
+      if (itemRef._location.path_.startsWith(userUid)) {
+        const url = await getDownloadURL(itemRef);
+        const name = itemRef.name;
+        files.push({ name, url });
       }
+    }
+
+    setUrls(files);
+  } catch (error) {
+    console.log(error);
   }
+}
 
   useEffect(() => {
     console.log(urls)
@@ -61,18 +69,19 @@ function App() {
   <Uploadfile />
   </div>
 
-    <div className= "savedRoutesButn">
-      <button onClick={handleSavedRoutesClick}>
-       {showSavedRoutes ? 'Hide Saved Routes' : 'Show Saved Routes'}
-      </button>{showSavedRoutes && <RoutesList />}</div>
+<div className="savedRoutesButn">
+  <button className="custom-button" onClick={handleSavedRoutesClick}>
+    {showSavedRoutes ? "Hide Saved Routes" : "Show Saved Routes"}
+  </button>
+  {showSavedRoutes && <RoutesList />}
+</div>
 
-<button onClick={onDisplayClick}>Show Saved Files</button>
-
-{urls.length !== 0 &&
-    <DisplayTickets links={urls} />
-}
-
-
+<div className="show-saved-file-btn">
+  <button className="custom-button" onClick={onDisplayClick}>
+    Show Saved Files
+  </button>
+  {urls.length !== 0 && <DisplayTickets links={urls} />}
+</div>
 
 </>
 

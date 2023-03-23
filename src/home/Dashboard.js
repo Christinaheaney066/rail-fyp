@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import {Link, useNavigate } from "react-router-dom";
-//import "../home/Dashboard.css";
+import { Link, useNavigate } from "react-router-dom";
 import { auth, db, logout } from "../home/firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import HomeContent from '../components/HomeContent';
@@ -9,8 +8,6 @@ import ImageSlider from "../components/ImageSlider";
 import styles from './Dashboard.modules.css';
 import DashboardContent from './DashboardContent';
 import TopTips from "./TopTips";
-
-
 
 //homepage
 
@@ -57,27 +54,19 @@ const slides  = [
    margin: "5px",
  };
 
-
   return (
-  <>
+    <>
       <div className="HomeCheck">
-      <HomeContent />
-     </div>
-
-     <div className = "sliderPics_container" >
-      <ImageSlider slides={slides} />
+        <HomeContent />
       </div>
 
-      <div className= "Dash-content">
-      <DashboardContent/>
-      </div>
 
-      <div className= "toptips">
-      <TopTips />
-      </div>
+            <div className="slider-content">
+             <ImageSlider slides={slides} />
+           </div>
 
-      </>
-       );
-        }
 
-export default Dashboard;
+     </>
+  );
+}
+export default Dashboard
