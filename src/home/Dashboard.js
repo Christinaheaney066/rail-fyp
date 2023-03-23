@@ -60,26 +60,12 @@ const slides  = [
         <HomeContent />
       </div>
 
-       <div className="col">
-          <div className="row">
+
             <div className="slider-content">
-             <div className="slider-container">
              <ImageSlider slides={slides} />
            </div>
-         </div>
-        </div>
 
-         <div className="row">
-           <div className="card-container">
-             <div className="card">
-               <DashboardContent />
-             </div>
-             <div className="card">
-               <TopTips />
-             </div>
-           </div>
-         </div>
-       </div>
+
      </>
   );
 }

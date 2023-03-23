@@ -22,12 +22,7 @@ img {
   padding: 30px;
   top: 0;
 }
-.row dash{
-  align-items: center;
-  padding-top: 2rem;
-  max-width: 100%;
 
-}
 
 .content-sections {
   display: flex;
@@ -69,6 +64,8 @@ width:200px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .slider-content > * {

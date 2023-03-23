@@ -8,7 +8,7 @@ const slideStyles = {
   borderRadius: "10px",
   backgroundSize: "cover",
   backgroundPosition: "center",
-  marginLeft: "200px",
+  marginLeft: "1500px",
   top: "20px",
 
 };
@@ -17,7 +17,7 @@ const rightArrowStyles = {
   position: "absolute",
   top: "50%",
   transform: "translate(0, -50%)",
-  left: "950px",
+  left: "2250px",
   fontSize: "50px",
   color: "#fff",
   zIndex: 1,
@@ -28,7 +28,7 @@ const leftArrowStyles = {
   position: "absolute",
   top: "50%",
   transform: "translate(0, -50%)",
-  left: "250px",
+  left: "1550px",
   fontSize: "50px",
   color: "#fff",
   zIndex: 1,
@@ -44,7 +44,7 @@ const dotsContainerStyles = {
   display: "flex",
   justifyContent: "left",
   position: "absolute",
-  left: "220px",
+  left: "1550px",
 };
 
 const dotStyle = {
