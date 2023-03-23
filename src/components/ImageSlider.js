@@ -1,62 +1,6 @@
-
 import React from 'react';
 import { useState } from "react";
-
-const slideStyles = {
-  width: "600px",
-  height: "600px",
-  borderRadius: "10px",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-};
-
-const rightArrowStyles = {
-  position: "absolute",
-  top: "50%",
-  transform: "translate(0, -50%)",
-  right: "32px",
-  fontSize: "45px",
-  color: "#fff",
-  zIndex: 1,
-  cursor: "pointer",
-};
-
-const leftArrowStyles = {
-  position: "absolute",
-  top: "50%",
-  transform: "translate(0, -50%)",
-  left: "32px",
-  fontSize: "45px",
-  color: "#fff",
-  zIndex: 1,
-  cursor: "pointer",
-};
-
-const sliderStyles = {
-  position: "relative",
-  height: "100%",
-};
-
-const dotsContainerStyles = {
-  display: "flex",
-  justifyContent: "center",
-};
-
-const dotStyle = {
-  margin: "0 3px",
-  cursor: "pointer",
-  fontSize: "20px",
-};
-const slidesContainerStyles = {
-  display: "flex",
-  height: "100%",
-  transition: "transform ease-out 0.3s",
-};
-
-const slidesContainerOverflowStyles = {
-  overflow: "hidden",
-  height: "100%",
-};
+import styles from './Imageslider.css';
 
 const ImageSlider = ({ slides }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -73,38 +17,48 @@ const ImageSlider = ({ slides }) => {
   const goToSlide = (slideIndex) => {
     setCurrentIndex(slideIndex);
   };
-  const slideStylesWidthBackground = {
-    ...slideStyles,
-    backgroundImage: `${slides[currentIndex].src}`,
-    title: `${slides[currentIndex].title}`
-  };
 
+const slideStylesWidthBackground = {
+  backgroundImage: `url(${slides[currentIndex].src})`,
+  backgroundPosition: 'left center',
+  backgroundSize: '50% auto',
+  title: `${slides[currentIndex].title}`
+};
+const slideStyles = {
+  width: "600px",
+  height: "600px",
+  borderRadius: "10px",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+};
   return (
-    <div style={sliderStyles}>
+    <div className={styles.slider}>
       <div>
-        <div onClick={goToPrevious} style={leftArrowStyles}>
+        <div onClick={goToPrevious} className={styles.leftArrow}>
           ❰
         </div>
-        <div onClick={goToNext} style={rightArrowStyles}>
+        <div onClick={goToNext} className={styles.rightArrow}>
           ❱
         </div>
       </div>
-      <div style={slideStylesWidthBackground}>
-        <img src={require('../extras/Image['+currentIndex+'].jpeg')} title={slideStylesWidthBackground.title} style={{ width: "100%", height: "100%" }}/>
+    <div style={{ ...slideStyles, ...slideStylesWidthBackground }}>
+      <div className = "image-mover"  style={{padding: "0 20%"}}>
+        <img src={require('../extras/Image['+currentIndex+'].jpeg')} title={slideStylesWidthBackground.title} style={{ width: "800px", height: "800px",  float: "left"  }}/>
       </div>
-      <div style={dotsContainerStyles}>
-        {slides.map((slide, slideIndex) => (
-          <div
-            style={dotStyle}
-            key={slideIndex}
-            onClick={() => goToSlide(slideIndex)}
-          >
-            ●
-          </div>
-        ))}
       </div>
-    </div>
-  );
-};
+      <div className={styles.dotsContainer}>
+       {slides.map((slide, slideIndex) => (
+       <div
+                   className={styles.dot}
+                   key={slideIndex}
+                   onClick={() => goToSlide(slideIndex)}
+                 >
+                   ●
+                 </div>
+               ))}
+             </div>
+           </div>
+         );
+       };
 
-export default ImageSlider;;
+export default ImageSlider;

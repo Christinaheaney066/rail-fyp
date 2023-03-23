@@ -23,11 +23,26 @@ img {
   top: 0;
 }
 
-.sliderPics_container{
-overFit: cover;
-height : 50 px;
-width : 50 px;
-padding: 30px;
-
+.content-sections {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 20px;
 }
 
+
+.toptips {
+  flex: 1;
+  margin: 0 10px;
+}
+.Dash-content{
+flex: 1;
+margin: 0 10px;
+}
+
+.sliderPics_container{
+height:200px;
+width:200px;
+
+}

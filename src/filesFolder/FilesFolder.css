@@ -1,6 +1,12 @@
-.savedToutesButn{
-padding: 20px;
-top : 20%;
+.savedRoutesButn{
+  background-color: #ff6961;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .title{
@@ -10,4 +16,21 @@ font-size: 1.2rem;
 }
 .upload-file-container {
   margin-top: 20px;
+}
+.todo-button {
+  margin-right: 10px;
+}
+
+.button-container {
+  margin-bottom: 10px;
+}
+.upload-file-container{
+  background-color: #ff6961;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
